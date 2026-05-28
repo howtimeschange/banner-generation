@@ -34,6 +34,13 @@ git clone https://github.com/howtimeschange/banner-generation.git ~/.codex/skill
 
 ## 配置 1xm
 
+### 注册和创建 API key
+
+1. 打开 1xm 邀请注册链接：[https://1xm.ai/register?aff=Bkzj](https://1xm.ai/register?aff=Bkzj)。
+2. 注册或登录后，进入平台的 API key / 模型调用配置页面。
+3. 创建用于图片生成的 API key，推荐选择或开通 `gpt-image-2【4K】` 能力。
+4. 复制 API key 后，按下面任一方式配置到本机。
+
 推荐使用环境变量：
 
 ```bash
