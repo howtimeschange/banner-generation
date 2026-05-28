@@ -56,6 +56,8 @@ JSON
 chmod 600 ~/.config/banner-generation/1xm.json
 ```
 
+这里的 `baseUrl` 是 1xm API 根地址，不是同步生图接口。脚本实际会请求 `POST /images/tasks` 创建异步任务，再轮询 `poll_url` 或 `/images/tasks/{id}` 直到拿到图片结果。
+
 不要把真实 API key 写进仓库、README、生成的 HTML 或 prompt 文件里。
 
 ## 在 Codex 中使用
@@ -90,7 +92,7 @@ Avoid: unreadable pseudo-text, watermark, border, UI chrome, over-busy collage.
 EOF
 ```
 
-生成视觉底图：
+通过 1xm 异步任务生成视觉底图：
 
 ```bash
 node scripts/generate_1xm_image.mjs \
@@ -100,6 +102,8 @@ node scripts/generate_1xm_image.mjs \
   --size 3840x1280 \
   --quality high
 ```
+
+这条命令内部会调用 `https://api.1xm.ai/v1/images/tasks`，不是同步等待式的生图端点。
 
 把 HTML 合成为最终 Banner：
 
@@ -123,7 +127,7 @@ sips -g pixelWidth -g pixelHeight tmp/my-banner/final.png
 1. 先确认目标尺寸、用途、品牌风格和必须出现的文案。
 2. 收集真实产品资料、截图、Logo 和参考图。
 3. 写一份英文图片 prompt，明确要求模型不要生成文字。
-4. 用 1xm 生成视觉底图。
+4. 用 1xm 异步任务接口生成视觉底图。
 5. 编写本地 HTML/CSS，把中文标题、说明、Logo 和标签叠加上去。
 6. 用 Playwright 渲染成 PNG。
 7. 检查尺寸、文字可读性、Logo 是否被裁切、背景里是否有伪文字。
